@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+  <title>Countdown Billboard - Nov 12, 2025</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="billboard-container">
+    <!-- Background video -->
+    <video id="bgVideo" autoplay muted loop playsinline preload="auto" class="background-img">
+      <source src="videos/h-1.mp4" type="video/mp4">
+      Tu navegador no soporta video HTML5.
+    </video>
+
+    <!-- Optional overlay image -->
+    <!-- <img id="background-image" src="img/rest-of-days.png" alt="Overlay" class="background-img"> -->
+
+    <!-- Countdown number -->
+    <div class="countdown-display">
+      <div class="days-container">
+        <span id="days" class="days-number">00</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const TARGET_DATE = new Date('2025-11-08T05:00:00.000Z'); // UTC-5 midnight
+      const daysElement = document.getElementById('days');
+      const backgroundImage = document.getElementById('background-image');
+      const countdownDisplay = document.querySelector('.countdown-display');
+      const video = document.getElementById('bgVideo');
+      const source = video.querySelector('source');
+
+      const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = TARGET_DATE - now;
+
+        if (diff > 0) {
+          const daysRemaining = Math.ceil(diff / MS_PER_DAY);
+          let formatted = daysRemaining < 10
+            ? `${daysRemaining}`
+            : daysRemaining < 100
+            ? daysRemaining.toString().padStart(2, '0')
+            : daysRemaining.toString().padStart(3, '0');
+
+          daysElement.textContent = formatted;
+
+          if (daysRemaining === 1) {
+            countdownDisplay.style.right = '20.5%';
+            backgroundImage.src = 'img/last-day.png';
+          } else if (daysRemaining < 10) {
+            countdownDisplay.style.right = '18.5%';
+          } else {
+            countdownDisplay.style.right = '14.5%';
+          }
+        } else {
+          daysElement.textContent = '0';
+          backgroundImage.src = 'img/last-day.png';
+        }
+      }
+
+      // Video orientation switch
+      function updateVideo() {
+        if (window.matchMedia('(orientation: portrait)').matches) {
+          source.src = 'videos/v-1.mp4'; // vertical video
+        } else {
+          source.src = 'videos/h-1.mp4'; // horizontal video
+        }
+        video.load();
+      }
+
+      updateVideo();
+      window.addEventListener('resize', updateVideo);
+      window.addEventListener('orientationchange', updateVideo);
+
+      updateCountdown();
+      setInterval(updateCountdown, 60000);
+    });
+  </script>
+</body>
+</html>

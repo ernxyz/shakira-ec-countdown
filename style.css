@@ -1,0 +1,190 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Professional font import for billboard display */
+@font-face {
+    font-family: 'Corona';
+    src: url('fonts/CoronaHeadline-SemiBold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Fallback fonts for reliability */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+/* Billboard container */
+.billboard-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Background image - full screen coverage */
+.background-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* fit without cropping */
+  background-color: black; /* fill the bars cleanly */
+  transform: translate(-50%, -50%);
+}
+
+
+
+/* Main countdown display positioned center-right */
+.countdown-display {
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    text-align: center;
+    filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.8));
+}
+
+/* Days container */
+.days-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Large days number - billboard optimized */
+.days-number {
+    font-family: 'Corona', 'Inter', 'Arial Black', sans-serif;
+    font-size: 180px; /* Base size for billboards */
+    font-weight: 900;
+    line-height: 0.85;
+    color: #FFFFFF;
+    letter-spacing: -0.05em;
+}
+
+/* Billboard Resolution: 768x320 */
+@media (min-width: 768px) {
+    .countdown-display {
+        left: -40%;
+        top: 56%;
+        transform: translateY(-50%);
+    }
+
+    .days-number {
+        font-size: 65px;
+        line-height: 0.9;
+        animation: popup 0.6s ease-out both;
+        animation-delay: 0.5s;
+    }
+
+    .days-container {
+        gap: 0.5rem;
+    }
+}
+
+/* ===== Pop-up animation ===== */
+@keyframes popup {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Billboard Resolution: 1080x450 */
+@media (min-width: 1080px) {
+    .countdown-display {
+        left: -40%;
+        top: 56%;
+        transform: translateY(-50%);
+    }
+
+    .days-number {
+        font-size: 100px;
+        line-height: 0.85;
+        animation: popup 0.6s ease-out both;
+        animation-delay: 0.5s;
+    }
+
+    .days-container {
+        gap: 0.8rem;
+    }
+}
+
+/* Billboard Resolution: 1920x768 */
+@media (min-width: 1920px) {
+    .countdown-display {
+        right: 16.5%;
+        top: 56%;
+        transform: translateY(-50%);
+    }
+
+    .days-number {
+        font-size: 220px;
+        line-height: 0.85;
+        animation-delay: 0.5s;
+
+    }
+
+    .days-container {
+        gap: 0.8rem;
+    }
+}
+
+/* Billboard Resolution: 600x800 (vertical) */
+@media (max-width: 800px) and (orientation: portrait) {
+    .countdown-display {
+        left: 55%;
+        top: 12%;
+        transform: translate(-50%, -50%);
+    }
+
+    .days-number {
+        font-size: 80px;
+        line-height: 0.9;
+        animation: popup 0.6s ease-out both;
+        animation-delay: 0.5s;
+    }
+
+    .days-container {
+        gap: 0.6rem;
+    }
+}
+
+
+/* Billboard Resolution: 720px–1079px (custom)
+@media (min-width: 720px) and (max-width: 1079px) {
+    .days-number {
+        animation: popup 0.6s ease-out both;
+    }
+} */
+
+/* High contrast mode for better visibility */
+@media (prefers-contrast: high) {
+    .days-number {
+        text-shadow:
+            6px 6px 0px #000000,
+            12px 12px 24px rgba(0, 0, 0, 0.9);
+    }
+}
